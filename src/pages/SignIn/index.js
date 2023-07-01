@@ -1,34 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { loggedIn, login, logout } = useContext(AuthContext);
 
   const handleLogin = () => {
-    if (email === 'test@test.com' && password === '123123') {
-      setLoggedIn(true);
-    } else {
-      alert('Login ou senha incorretos!');
+    try {
+      login(email, password);
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   const handleLogout = () => {
-    setLoggedIn(false);
+    logout();
     setEmail('');
     setPassword('');
   };
-
-  if (loggedIn) {
-    return (
-      <div>
-        <h1>Bem-vindo à tela Home!</h1>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
-    );
-  }
 
   return (
     <div className="base-container">
