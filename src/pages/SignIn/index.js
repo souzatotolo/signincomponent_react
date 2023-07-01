@@ -5,6 +5,30 @@ import './styles.css';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    if (email === 'test@test.com' && password === '123123') {
+      setLoggedIn(true);
+    } else {
+      alert('Login ou senha incorretos!');
+    }
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    setEmail('');
+    setPassword('');
+  };
+
+  if (loggedIn) {
+    return (
+      <div>
+        <h1>Bem-vindo à tela Home!</h1>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+    );
+  }
 
   return (
     <div className="base-container">
@@ -30,7 +54,7 @@ export default function SignIn() {
             onChange={(e) => setPassword(e.target.value)}
             data-cy="input-password"
           />
-          <button className="btn-login" type="submit">
+          <button className="btn-login" type="submit" onClick={handleLogin}>
             Sign In
           </button>
         </form>
